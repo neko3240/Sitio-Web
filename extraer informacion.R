@@ -51,3 +51,28 @@ tabla1 <- html_table(NodesDelHTML[1][[1]])
 #extraccion info tabla 2
 
 tabla2 <- html_table(NodesDelHTML[2][[1]])
+
+#buscar en el data frame
+tablmergeproductossupermercado <-paste(tablamergeproductos," ", tablamergesuper)
+
+#boxplot
+#tableMerge %>%
+
+## scar forma del fera chileno
+  
+PaginaChilenaDelLibr <- "https://www.feriachilenadellibro.cl/"
+
+PaginaChilenaDelRead <- read_html(PaginaChilenaDelLibr)
+
+PaginaChilenaNodesReferences <- html_nodes(PaginaChilenaDelRead,".product-item-photo")
+
+referencias <- html_attr(PaginaChilenaNodesReferences,"href")
+
+for(refe in referencias){
+  print(refe)
+lecturalibro <- read_html(refe)
+precio <- html_text(html_nodes(lecturalibro,".price"))
+print(precio)
+}
+
+
