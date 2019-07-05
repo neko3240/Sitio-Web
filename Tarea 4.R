@@ -12,6 +12,9 @@ Pagina_ali_NodesRef <- html_nodes(Pagina_ali_read,".picRind history-item")
 
 referencias <- html_attr(Pagina_ali_NodesRef,"href")
 
+
+
+
 for(refe in referencias){
   print(refe)
   Infoproducto <- read_html(i)
