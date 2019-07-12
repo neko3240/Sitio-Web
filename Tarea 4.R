@@ -1,22 +1,32 @@
+### borrado de variables 
+
+rm(list = ls())
+
+###installar y utilizar paquetes
 #install.packages("rvest")
 library(rvest)
 
 
-#Extraer informacion de nuestro sitio web
+#insertar link de sitio web (ya tiene el criterio de busqueda integrado en la url)
 
-Pagina_ali <- "https://www.aliexpress.com/wholesale?catId=0&initiative_id=SB_20190703150555&SearchText=reloj+deportivo"
+Pagina <- "https://www.falabella.com/falabella-cl/category/cat7480067/Relojes-deportivos"
 
-Pagina_ali_read <- read_html(Pagina_ali)
+#Leer informacion del sitio
 
-Pagina_ali_NodesRef <- html_nodes(Pagina_ali_read,".picRind history-item")
+Pagina_read <- read_html(Pagina)
 
-referencias <- html_attr(Pagina_ali_NodesRef,"href")
+#Espesificar el area a extraerse informacion
+
+Pagina_Nodes <- html_nodes(Pagina_read,'.content__image')
+
+#Referirce a links individuales
+
+referencias <- html_attr(Pagina_Nodes,"href")
 
 
-
-
-for(refe in referencias){
-  print(refe)
+for(i in referencias){
+  print(i)
+  
   Infoproducto <- read_html(i)
 
   Nombre <- html_text(html_nodes(Infoproducto,".product-title"))
