@@ -9,7 +9,7 @@ library(rvest)
 
 #insertar link de sitio web (ya tiene el criterio de busqueda integrado en la url)
 
-Pagina <- "https://www.falabella.com/falabella-cl/category/cat7480067/Relojes-deportivos"
+Pagina <- "https://www.rottentomatoes.com/"
 
 #Leer informacion del sitio
 
@@ -17,28 +17,34 @@ Pagina_read <- read_html(Pagina)
 
 #Espesificar el area a extraerse informacion
 
-Pagina_Nodes <- html_nodes(Pagina_read,'.content__image')
+Pagina_Nodes <- html_nodes(Pagina_read,'.sidebarInTheaterOpening')
 
-#Referirce a links individuales
+Pagina_Nodes2 <- html_nodes(Pagina_Nodes,'.middle_col')
 
-referencias <- html_attr(Pagina_Nodes,"href")
+Pagina_Nodes3 <- html_nodes(Pagina_Nodes2,"a")
+
+#Alistar links individualmente
+
+referencias <- html_attr(Pagina_Nodes3,"href")
 
 
 for(i in referencias){
-  print(i)
-  
-  Infoproducto <- read_html(i)
+nombre <- i
+nombre <- gsub("/m/","",nombre)
+print("Titulo:")
+print(nombre)
 
-  Nombre <- html_text(html_nodes(Infoproducto,".product-title"))
-  print(Nombre)
+link <-  paste("https://www.rottentomatoes.com",i, sep="")
 
-  Precio <- html_text(html_nodes(Infoproducto,".product-price-value"))
-  print(Precio)
-
-  Imagen <- html_text(html_nodes(Infoproducto,".magnifier-image"))
-  print(Imagen)
-
-Print("------------------------------------------------------")
+paginaunica <- read_html(link)
+puntaje <- html_text(html_nodes(paginaunica,".mop-ratings-wrap__percentage"))
+print("Puntaje:")
+for(e in puntaje){
+puntaje2 <- e
+puntaje2 <- gsub("\n","",puntaje2)
+print(puntaje2)
+}
+print("------------------------------------------------------")
 
   }
 
