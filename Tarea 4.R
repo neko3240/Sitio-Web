@@ -27,7 +27,6 @@ Pagina_Nodes3 <- html_nodes(Pagina_Nodes2,"a")
 
 referencias <- html_attr(Pagina_Nodes3,"href")
 
-
 for(i in referencias){
 nombre <- i
 nombre <- gsub("/m/","",nombre)
@@ -45,7 +44,6 @@ puntaje2 <- gsub("\n","",puntaje2)
 print(puntaje2)
 }
 print("------------------------------------------------------")
-
-  }
+}
 
 
