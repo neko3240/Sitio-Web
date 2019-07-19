@@ -31,12 +31,15 @@ Pagina_Nodes3 <- html_nodes(Pagina_Nodes2,"a")
 
 referencias <- html_attr(Pagina_Nodes3,"href")
 
+#crear una tabla, nombrar las columnas y quitarle su valor inicial
+
 TABLA <- matrix(c("nada",0,0),ncol=3,byrow=TRUE)
 colnames(TABLA) <- c("Nombre","PC","PP")
-
 row_to_keep = c(FALSE)
 TABLA = TABLA[row_to_keep,]
 
+#extraer toda la informacion de nombre y puntajes de cada pelicula
+#guardar los valores de esta dentro de la tabla antes creada
 for(i in referencias){
   nombre <- i
   nombre <- gsub("/m/","",nombre)
@@ -65,6 +68,7 @@ for(i in referencias){
   print("------------------------------------------------------")
 }
 
+#transformar porcentajes y strings a valores numericos
 TABLA <- gsub("%","",TABLA)
 DATAFRAMEPELICULAS <- as.data.frame(TABLA)
 DATAFRAMEPELICULAS$PP <- gsub(" ","",DATAFRAMEPELICULAS$PP)
@@ -72,10 +76,13 @@ DATAFRAMEPELICULAS$PC <- gsub(" ","",DATAFRAMEPELICULAS$PC)
 DATAFRAMEPELICULAS$PP <- as.numeric(DATAFRAMEPELICULAS$PP)
 DATAFRAMEPELICULAS$PC <- as.numeric(DATAFRAMEPELICULAS$PC)
 
+#crear un grafico que muestre los puntajes de cada pelicula
 DATAFRAMEPELICULAS %>%
   ggplot() +
   aes(x = Nombre, y = PP) +
   geom_bar(stat="identity")+
   coord_flip()
 
-
+#guardar la informacion en un par de exels
+write.csv(DATAFRAMEPELICULAS, file="Dataframe datos.csv")
+write.csv(TABLA, file="Tabla datos.csv")
